@@ -35,12 +35,17 @@
   border:3px solid red;
 }
         </style>
+
 <title>
 Cheese:The Dangers Of Cheese
 </title>
     </head>
 
     <body>
+        <p style="font-size: 50px;">Please listen to this while scrolling, it enhances your cheese experience.</p>
+        <audio controls muted autoplay loop>
+            <source src="Abraxas Mix).mp3" type="audio/mp3">
+        </audio>
         <h1>
             Different Types Of Cheese:
         </h1>
@@ -52,6 +57,9 @@ Cheese:The Dangers Of Cheese
     <iframe id="cheese" width="480" height="480"
     src="https://www.youtube.com/embed/HLN6GnySlcw?autoplay=1&mute=0&controls=0">
     </iframe>
+</br>
+<script src="alertthingy.js"></script>
+    <button type="button" onclick="cheese2()">Touch Me</button>
     <p>
         Swiss Cheese is the worst kind of cheese and is inferior to every other types of cheese in all ways humanly possible. If anyone enjoys swiss cheese they are a monster and should be executed.
     </p>
@@ -156,14 +164,14 @@ Cheese:The Dangers Of Cheese
        var high=1;
         function increase(){
             if(wid<480){
-            wid=wid+10;
-            high=high+10;
+            wid=wid+2;
+            high=high+2;
             }
             document.getElementById("cheese").width=wid;
             document.getElementById("cheese").height=high;
         
         }
-setInterval(increase,100);
+setInterval(increase,10);
     </script>
 </body>
 </html>
