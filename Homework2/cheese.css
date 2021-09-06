@@ -1,0 +1,49 @@
+
+body{
+    background-image:url("CHEESE.jpeg");
+    background-size:0.1%;
+    background-repeat:repeat;
+    font-family:'Times New Roman', Times, serif;
+    color:blue;
+    font-size:50px;
+}
+title{
+    font-family:'Times New Roman', Times, serif;
+}
+h1{
+    font-family:'Times New Roman', Times, serif;
+    font-size:50px;
+}
+h2{
+    font-family:'Times New Roman', Times, serif;
+    font-size:40px;
+}
+p{
+    font-family:"Comic Sans MS", "Comic Sans", cursive;
+    font-size:25px;
+    font-weight:bolder;
+}
+th{
+    font-size:45px;
+    font-weight: bold;
+}
+td{
+    font-size:35px;
+    font-family:'Times New Roman', Times, serif;
+}
+table, th, td {
+border:3px solid red;
+}
+.hi{
+    display:flex;
+    background-color: crimson;
+    justify-content:center;
+}
+.cheese{
+    display:flex;
+    background-color: orange;
+    margin:10px;
+    padding:20px;
+    font-size:35px;
+    align-items: center;
+}

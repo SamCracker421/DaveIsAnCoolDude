@@ -1,41 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
-            body{
-                background-image:url("CHEESE.jpeg");
-                background-size:10%;
-                background-repeat:repeat;
-            }
-            title{
-                font-family:'Times New Roman', Times, serif;
-            }
-            h1{
-                font-family:'Times New Roman', Times, serif;
-                font-size:50px;
-            }
-            h2{
-                font-family:'Times New Roman', Times, serif;
-                font-size:40px;
-            }
-            p{
-                font-family:"Comic Sans MS", "Comic Sans", cursive;
-                font-size:25px;
-                font-weight:bolder;
-            }
-            th{
-                font-size:45px;
-                font-weight: bold;
-            }
-            td{
-                font-size:35px;
-                font-family:'Times New Roman', Times, serif;
-            }
-            table, th, td {
-  border:3px solid red;
-}
-        </style>
-
+        <link rel="stylesheet" href="cheese.css">
 <title>
 Cheese:The Dangers Of Cheese
 </title>
@@ -163,7 +129,7 @@ Cheese:The Dangers Of Cheese
        var wid=1;
        var high=1;
         function increase(){
-            if(wid<10000){
+            if(wid<480){
             wid=wid+5;
             high=high+5;
             }
@@ -172,6 +138,13 @@ Cheese:The Dangers Of Cheese
         
         }
 setInterval(increase,10);
+    </script>
+    <script>
+        for(var i=0;i<10000;i++){
+            document.write("<h class='hi'>");
+            document.write("<p class='cheese'>Cheesus is good</br></p>");
+            document.write("</h>")
+        }
     </script>
 </body>
 </html>
