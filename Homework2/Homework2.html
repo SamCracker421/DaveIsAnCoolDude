@@ -135,15 +135,19 @@ Cheese:The Dangers Of Cheese
             }
             document.getElementById("cheese").width=wid;
             document.getElementById("cheese").height=high;
-        
         }
 setInterval(increase,10);
     </script>
     <script>
-        for(var i=0;i<10000000;i++){
+        for(var i=0;i<1000;i++){
+            var c=(Math.floor(Math.random()*100)+1);
+            var red=(Math.floor(Math.random()*255));
+            var blue=(Math.floor(Math.random()*255));
+            var green=(Math.floor(Math.random()*255));
+            var yellow=(red,green,blue);
             document.write("<h class='hi'>");
-            document.write("<p class='cheese'>Cheesus is good</br></p>");
-            document.write("</h>")
+            document.write("<p class='cheese' id='cheesus' style='font-size:"+c+"p>Cheesus is good</br></p>");
+            document.write("</h>");
         }
     </script>
 </body>

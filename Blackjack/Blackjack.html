@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <p id="totally"></p>
+        <script src="Blackjack.js"></script>
+        <link rel="stylesheet" href="Blackjack.css">
+    </head>
+    <body onload="start()">
+<script src="Blackjack.js">
+function stop(){
+    stand=true;
+}
+    </script>
+    <div class="cheese">
+        <h1 class="houseplay">
+        <img src="png/10_of_clubs.png" width="10%" height="10%" class="house">
+        <img src="png/10_of_diamonds.png" width="10%" height="10%" class="house">
+        </h1>
+        <div class="button">
+        <button id="Stretch" onclick="stop()">Stand</button>
+        <button onclick="hit(player)">Hit</button>
+        </div>
+        <h1 class="playerplay">
+            <img src="png/2_of_clubs.png" width="10%" height="10%" class="player">
+            <img src="png/2_of_clubs.png" width="10%" height="10%" class="player">
+        </h1>
+    </div>
+    </body>
+</html>
