@@ -10,6 +10,7 @@ function start() {
     deal(player);
     deal(horse);
     deal(player);
+    output(player);
 }
 function createdeck() {
     for (var i = 1; i < 14; i++) {
