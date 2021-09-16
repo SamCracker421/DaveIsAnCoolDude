@@ -275,5 +275,5 @@ function tocard(x1,x){
 for (var x = 0; x < player.length; x++) {
         var turkey=document.createElement("IMG");
         turkey.src=tocard(player,x);
-        document.getElementById("suckme").appendChild(turkey);
+        document.getElementById("heck").appendChild(turkey);
 }
