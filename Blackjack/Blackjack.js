@@ -11,6 +11,9 @@ function start() {
     deal(horse);
     deal(player);
     output(player);
+    shoot();
+    shot();
+    
 }
 function createdeck() {
     for (var i = 1; i < 14; i++) {
@@ -59,6 +62,11 @@ function hit(x1) {
     if (sum(player) > 21) {
         win = 1;
     }
+    shoot();
+    if(sum(player)>21){
+        win=1;
+        winconditions();
+    }
 }
 
 function output(x1) {
@@ -79,7 +87,10 @@ function house() {
     return horse;
 }
 function winconditions() {
-    house();
+    shot();
+    if(sum(player)<=21){
+        house();
+    }
     document.getElementById("hitter").onclick = "";
     if (sum(player) < sum(horse)) {
         win = 1;
@@ -95,186 +106,101 @@ function winconditions() {
     if (sum(player) > sum(horse) || sum(player) <= 21) {
         win = 2;
     }
-    if (sum(player > 21)) {
+    if (sum(player) > 21) {
         win = 1;
     }
     else if (sum(horse) > 21) {
         win = 2;
     }
-    // if (stand = true) {
-    //     if (win == 1) {
-    //         bank = bank - bet;
-    //     }
-    //     else if (win == 2) {
-    //         bank = bank + bet;
-    //     }
-    //     else if (win == 3) {
-    //         bank = bank + (1.5) * bet;
-    //     }
-    // }
+}
+function tosuit(x1){
+    let suit='q';
+    switch(x1[0]){
+        case 1:
+            suit='c';
+            break;
+        case 2:
+            suit='s';
+            break;
+        case 3:
+            suit='d';
+            break;
+        case 4:
+            suit='h';
+            break;
+        default:
+            suit='o';
+    }
+    return suit;
+}
+function tonumber(x1){
+    let number='g';
+    switch(x1[1]){
+    case 1:
+        number='a';
+        break;
+    case 11:
+        number='j';
+        break;
+    case 12:
+        number='q';
+        break;
+    case 13:
+        number='k';
+        break;
+    default:
+        number=x1[1];
+    }
+return number;
 }
 function tocard(x1,x){
-    var img="";
-            if(x1[x]===[1, 1]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\ac.png";
-                }
-            else if(x1[x]===[1, 2]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\2c.png";
-                }
-            else if(x1[x]===[1, 3]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\3c.png";
-                }
-            else if(x1[x]===[1, 4]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\4c.png";
-                }
-            else if(x1[x]===[1, 5]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\5c.png";
-                }
-            else if(x1[x]===[1, 6]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\6c.png";
-                }
-            else if(x1[x]===[1, 7]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\7c.png";
-                }
-            else if(x1[x]===[1, 8]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\8c.png";
-                }
-            else if(x1[x]===[1, 9]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\9c.png";
-                }
-            else if(x1[x]===[1, 10]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\10c.png";
-                }
-            else if(x1[x]===[1, 11]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\jc.png";
-                }
-            else if(x1[x]===[1, 12]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\qc.png";
-                }
-            else if(x1[x]===[1, 13]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\kc.png";
-                }
-            else if(x1[x]===[2, 1]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\ah.png";
-                }
-            else if(x1[x]===[2, 2]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\2h.png";
-                }
-            else if(x1[x]===[2, 3]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\3h.png";
-                }
-            else if(x1[x]===[2, 4]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\4h.png";
-                }
-            else if(x1[x]===[2, 5]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\5h.png";
-                }
-            else if(x1[x]===[2, 6]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\6h.png";
-                }
-            else if(x1[x]===[2, 7]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\7h.png";
-                }
-            else if(x1[x]===[2, 8]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\8h.png";
-                }
-            else if(x1[x]===[2, 9]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\9h.png";
-                }
-            else if(x1[x]===[2, 10]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\10h.png";
-                }
-            else if(x1[x]===[2, 11]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\jh.png";
-                }
-            else if(x1[x]===[2, 12]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\qh.png";
-                }
-            else if(x1[x]===[2, 13]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\kh.png";
-                }
-            else if(x1[x]===[3, 1]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\ad.png";
-                }
-            else if(x1[x]===[3, 2]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\2d.png";
-                }
-            else if(x1[x]===[3, 3]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\3d.png";
-                }
-            else if(x1[x]===[3, 4]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\4d.png";
-                }
-            else if(x1[x]===[3, 5]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\5d.png";
-                }
-            else if(x1[x]===[3, 6]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\6d.png";
-                }
-            else if(x1[x]===[3, 7]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\7d.png";
-                }
-            else if(x1[x]===[3, 8]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\8d.png";
-                }
-            else if(x1[x]===[3, 9]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\9d.png";
-                }
-            else if(x1[x]===[3, 10]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\10d.png";
-                }
-            else if(x1[x]===[3, 11]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\jd.png";
-                }
-            else if(x1[x]===[3, 12]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\qd.png";
-                }
-            else if(x1[x]===[3, 13]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\kd.png";
-                }
-            else if(x1[x]===[4, 1]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\as.png";
-                }
-            else if(x1[x]===[4, 2]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\2s.png";
-                }
-            else if(x1[x]===[4, 3]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\3s.png";
-                }
-            else if(x1[x]===[4, 4]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\4s.png";
-                }
-            else if(x1[x]===[4, 5]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\5s.png";
-                }
-            else if(x1[x]===[4, 6]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\6s.png";
-                }
-            else if(x1[x]===[4, 7]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\7s.png";
-                }
-            else if(x1[x]===[4, 8]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\8s.png";
-                }
-            else if(x1[x]===[4, 9]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\9s.png";
-                }
-            else if(x1[x]===[4, 10]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\10s.png";
-                }
-            else if(x1[x]===[4, 11]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\js.png";
-                }
-            else if(x1[x]===[4, 12]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\qs.png";
-                }
-            else if(x1[x]===[4, 13]){
-                img="C:\Users\Pleas\Desktop\DaveIsAnCoolDude\Blackjack\pug\ks.png";
-            }
-        return img;
+    let img;
+    img="pug"+"\\"+tonumber(x1[x])+tosuit(x1[x])+".png";
+    return img;
 }
+function killkids(){
+    let element=document.getElementById("heck")
+while(element.firstChild){
+    element.removeChild(element.firstChild);
+}
+}
+function destroythehchild(){
+    let element=document.getElementById("hurkey")
+    while(element.firstChild){
+        element.removeChild(element.firstChild);
+    }
+}
+function shot(){
+    destroythehchild();
+if(stand==false){
+let sus=document.createElement("img");
+sus.src="pug\\back.png";
+sus.className="horseplay";
+document.getElementById("hurkey").appendChild(sus);
+for(let x=1; x<horse.length;x++){
+    let sus=document.createElement("img");
+    sus.src=tocard(horse,x);
+    sus.className="horseplay";
+    document.getElementById("hurkey").appendChild(sus);
+}
+}
+else{
+    destroythehchild();
+    for(let x=0; x<horse.length;x++){
+        let sus=document.createElement("img");
+        sus.src=tocard(horse,x);
+        sus.className="horseplay";
+        document.getElementById("hurkey").appendChild(sus);
+    }
+
+}
+}
+function shoot(){
+killkids();
 for (var x = 0; x < player.length; x++) {
-        var turkey=document.createElement("IMG");
+        var turkey=document.createElement("img");
         turkey.src=tocard(player,x);
+        turkey.className="horseplay";
         document.getElementById("heck").appendChild(turkey);
+}
 }
