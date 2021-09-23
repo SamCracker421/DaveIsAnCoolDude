@@ -7,17 +7,26 @@
     <body onload="start()">
 <script src="Blackjack.js"></script>
 <script>
-
 function stop(){
     stand=true;
+}
+function reset(){
+win = 0;
+stand=false;
+document.getElementById("dosomething").onclick=hit(player);
+document.getElementById("potato").innerText="";
+horse = [];
+player = [];
+start();
+}
+function nothing(){
 }
 function checkwin(){
 if(stand==true){
     winconditions();   
 }
 }
-
-setInterval(checkwin,1000);
+setInterval(checkwin,100);
     </script>
     <div class="cheese">
         <h1 class="houseplay" id="hurkey">
@@ -25,10 +34,20 @@ setInterval(checkwin,1000);
         <div class="button">
         <button id="Stretch" onclick="stop()">Stand</button>
         <p id="potato"></p>
-        <button id="hitter" onclick="hit(player)">Hit</button>
+        <button id="dosomething" onclick="hit(player)">Hit</button>
         </div>
         <h1 class="playerplay" id="heck">
         </h1>
+        <script>
+            if(stand==true){
+                let cheesus=document.createElement("button");
+                cheesus.type="button";
+                cheesus.onclick="reset()";
+                cheesus.innerHTML="reset";
+                document.getElementById("button").appendChild(cheesus);
+            }
+        </script>
+
     </div>
     </body>
 </html>

@@ -1,20 +1,9 @@
-
+var win = 0;
+var stand=false;
 var horse = [];
 var player = [];
 var deck = [];
-var win = 0;
-var stand=false;
-function start() {
-    createdeck();
-    deal(horse);
-    deal(player);
-    deal(horse);
-    deal(player);
-    output(player);
-    shoot();
-    shot();
-    
-}
+createdeck();
 function createdeck() {
     for (var i = 1; i < 14; i++) {
         for (var x = 1; x < 5; x++) {
@@ -23,6 +12,22 @@ function createdeck() {
         }
     }
 }
+function checkdecklength(){
+    if(deck.length<10){
+        deck=[];
+        createdeck();
+    }
+}
+
+function start() {
+    deal(horse);
+    deal(player);
+    deal(horse);
+    deal(player);
+    shoot();
+    shot();
+}
+
 function deal(x1) {
     var x = Math.floor(Math.random() * deck.length);
     x1.push(deck[x]);
@@ -57,7 +62,6 @@ function hit(x1) {
     var x = Math.floor(Math.random() * deck.length);
     x1.push(deck[x]);
     deck.splice(x, 1);
-    output(player);
     natural = false;
     if (sum(player) > 21) {
         win = 1;
@@ -91,26 +95,22 @@ function winconditions() {
     if(sum(player)<=21){
         house();
     }
-    document.getElementById("hitter").onclick = "";
-    if (sum(player) < sum(horse)) {
-        win = 1;
+    
+    if(sum(horse)>21 || sum(player)<=21){
+        win=2;
     }
-    if (sum(player) === 21) {
-        if (natural === false) {
-            win = 2;
-        }
-        else {
-            win = 3;
-        }
+    else if(sum(player)==sum(horse)){
+        win=2;
     }
-    if (sum(player) > sum(horse) || sum(player) <= 21) {
-        win = 2;
+
+    if(win===1){
+        document.getElementById("potato").innerText="House Wins";
     }
-    if (sum(player) > 21) {
-        win = 1;
+    else if(win==2){
+        document.getElementById("potato").innerText="Player Wins";
     }
-    else if (sum(horse) > 21) {
-        win = 2;
+    else if(win==4){
+        document.getElementById("potato").innerText="Tie Wins";
     }
 }
 function tosuit(x1){
@@ -171,8 +171,8 @@ function destroythehchild(){
     }
 }
 function shot(){
-    destroythehchild();
-if(stand==false){
+destroythehchild();
+if(stand===false){
 let sus=document.createElement("img");
 sus.src="pug\\back.png";
 sus.className="horseplay";

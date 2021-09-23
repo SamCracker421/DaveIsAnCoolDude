@@ -20,6 +20,10 @@ body{
     padding:10px;
     margin:10px;
 }
+img{
+    width:88px;
+    height:124px;
+}
 .house{
     display:flex;
     background-color:white;
