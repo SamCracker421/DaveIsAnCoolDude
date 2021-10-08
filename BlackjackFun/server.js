@@ -110,6 +110,16 @@ stand;
 horse;
 });
 
+// app.post('/api/cmds', (req,res) =>{
+//     res.send({
+//         gamestate: {
+//             "Player":player,
+//             "House" : horse,
+//             "win" : win
+//         }
+// })
+// });
+
 app.post('/', (req, res)=>{
     let sillystring={};
     sillystring.player=player;
