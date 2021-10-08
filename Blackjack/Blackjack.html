@@ -9,44 +9,59 @@
 <script>
 function stop(){
     stand=true;
+    resetbutton();
 }
 function reset(){
-win = 0;
 stand=false;
-document.getElementById("dosomething").onclick=hit(player);
+if(win==1){
+bank=bank-bet;}
+else if(win==2){
+bank=bank-bet;}
+else if(win==4){bank=bank}
+checkdecklength();
+let element=document.getElementById("HeeHee Funny")
+    while(element.lastChild.id=="Frick"){
+        element.removeChild(element.lastChild);
+    }
+document.getElementById("dosomething").Onclick='hit(player)';
 document.getElementById("potato").innerText="";
 horse = [];
 player = [];
+let bet=window.prompt("Input Bet","50");
+    while(bet>bank){
+        let bet=window.prompt("Input Bet","50");
+    }
+    win = 0;
 start();
 }
 function nothing(){
 }
 function checkwin(){
 if(stand==true){
-    winconditions();   
+    winconditions(); 
 }
 }
-setInterval(checkwin,100);
+function resetbutton(){
+            if(stand===true){
+            let cheesus=document.createElement("button");
+                cheesus.id="Frick";
+                cheesus.innerHTML="reset";
+                document.getElementById("HeeHee Funny").appendChild(cheesus);
+                document.getElementById("Frick").onclick=reset;
+            }
+        }
+    setInterval(checkwin,100);
     </script>
     <div class="cheese">
         <h1 class="houseplay" id="hurkey">
         </h1>
-        <div class="button">
+        <div class="butt" id="HeeHee Funny">
         <button id="Stretch" onclick="stop()">Stand</button>
         <p id="potato"></p>
         <button id="dosomething" onclick="hit(player)">Hit</button>
         </div>
         <h1 class="playerplay" id="heck">
         </h1>
-        <script>
-            if(stand==true){
-                let cheesus=document.createElement("button");
-                cheesus.type="button";
-                cheesus.onclick="reset()";
-                cheesus.innerHTML="reset";
-                document.getElementById("button").appendChild(cheesus);
-            }
-        </script>
 
     </div>
     </body>

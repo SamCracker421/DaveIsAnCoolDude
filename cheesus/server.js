@@ -1,11 +1,19 @@
-const express = require('express')
-const app = express()
-const port = 6969
+const express = require('express');
+const app = express();
+const port = 3000;
 
-app.get('/', (req, res) => { 
-  res.send("hello:"+ req.ip);
-})
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
+const path = require('path');
+app.use('/', express.static(path.join(__dirname, 'Public')));
+
+app.get('/', (req, res) => {
+  res.write('hello');
+  res.end();
+});
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-  })
+    console.log(`BlackJack Server at http://localhost:${port}`)
+});
+

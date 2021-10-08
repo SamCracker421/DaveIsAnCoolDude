@@ -1,8 +1,14 @@
 var win = 0;
+var bank=100;
 var stand=false;
 var horse = [];
 var player = [];
 var deck = [];
+let bet=window.prompt("Input Bet","50");
+while(bet>bank){
+let bet=window.prompt("Input Bet","50");
+}
+bet=parseInt(bet);
 createdeck();
 function createdeck() {
     for (var i = 1; i < 14; i++) {
@@ -20,6 +26,7 @@ function checkdecklength(){
 }
 
 function start() {
+
     deal(horse);
     deal(player);
     deal(horse);
@@ -70,8 +77,13 @@ function hit(x1) {
     if(sum(player)>21){
         win=1;
         winconditions();
+        let cheesus=document.createElement("button");
+        cheesus.id="Frick";
+        cheesus.innerHTML="reset";
+        document.getElementById("HeeHee Funny").appendChild(cheesus);
+        document.getElementById("Frick").onclick=reset;
     }
-}
+    }
 
 function output(x1) {
     var output = "";
@@ -92,15 +104,21 @@ function house() {
 }
 function winconditions() {
     shot();
+    document.getElementById("dosomething").Onclick="";
     if(sum(player)<=21){
         house();
     }
-    
-    if(sum(horse)>21 || sum(player)<=21){
+    if(sum(horse)>21 && sum(player)<=21){
         win=2;
     }
-    else if(sum(player)==sum(horse)){
+    if(sum(horse)<sum(player) && sum(player)<=21){
         win=2;
+    }
+    else if(sum(horse)>sum(player) && sum(horse) <= 21){
+        win=1;
+    }
+    else if(sum(player)==sum(horse)){
+        win=4;
     }
 
     if(win===1){
@@ -172,7 +190,7 @@ function destroythehchild(){
 }
 function shot(){
 destroythehchild();
-if(stand===false){
+if(stand==false){
 let sus=document.createElement("img");
 sus.src="pug\\back.png";
 sus.className="horseplay";
