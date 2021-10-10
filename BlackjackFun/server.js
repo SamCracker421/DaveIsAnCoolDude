@@ -1,3 +1,4 @@
+const { SSL_OP_EPHEMERAL_RSA } = require('constants');
 const express = require('express');
 const app = express();
 const port = 6969;
@@ -9,6 +10,10 @@ const path = require('path');
 const { send } = require('process');
 app.use('/', express.static(path.join(__dirname, 'static')));
 
+
+//functions for game
+
+
 var win = 0;
 var stand=false;
 var horse = [];
@@ -16,6 +21,7 @@ var player = [];
 var deck = [];
 createdeck();
 start();
+
 function createdeck() {
     for (var i = 1; i < 14; i++) {
         for (var x = 1; x < 5; x++) {
@@ -24,12 +30,15 @@ function createdeck() {
         }
     }
 }
+
+
 function checkdecklength(){
     if(deck.length<10){
         deck=[];
         createdeck();
     }
 }
+
 
 function start() {
     deal(horse);
@@ -38,11 +47,14 @@ function start() {
     deal(player);
 }
 
+
 function deal(x1) {
     var x = Math.floor(Math.random() * deck.length);
     x1.push(deck[x]);
     deck.splice(x, 1);
 }
+
+
 function sum(x1) {
     var x = 0;
     for (var z = 0; z < x1.length; z++) {
@@ -68,6 +80,8 @@ function sum(x1) {
     }
     return x;
 }
+
+
 function hit(x1) {
     var x = Math.floor(Math.random() * deck.length);
     x1.push(deck[x]);
@@ -76,7 +90,8 @@ function hit(x1) {
     if (sum(player) > 21) {
         win = 1;
     }
-    }
+}
+
 function house() {
     while (sum(horse) < 17) {
         hit(horse);
@@ -86,6 +101,7 @@ function house() {
     }
     return horse;
 }
+
 function winconditions() {
     if(sum(player)<=21){
         house();
@@ -103,6 +119,11 @@ function winconditions() {
         win=4;
     }
 }
+
+
+//predominantly server side code.
+
+
 app.get('/', (req, res)=>{
 deck;
 player;
@@ -110,57 +131,56 @@ stand;
 horse;
 });
 
-// app.post('/api/cmds', (req,res) =>{
-//     res.send({
-//         gamestate: {
-//             "Player":player,
-//             "House" : horse,
-//             "win" : win
-//         }
-// })
-// });
-
+function sendgamedata(){
+    let sillystring={};
+    sillystring.player=player;
+    sillystring.horse=horse;
+    sillystring.win=win;
+    sillystring.stand=stand;
+    res.send(sillystring);
+}
 app.post('/', (req, res)=>{
     let sillystring={};
     sillystring.player=player;
     sillystring.horse=horse;
-    res.json(sillystring);
-    console.log(sillystring);
+    sillystring.win=win;
+    sillystring.stand=stand;
+    res.send(sillystring);
+});
+app.post('/hit', (req,res) =>{
+    if(sum(player)<21){
+    hit(player);
+    }
+    console.log("Hit!");
+    res.redirect('http://localhost:6969');
 });
 
-app.post('/hit', (req,res) =>{
-    if(sum(player)<=21 && stand==false){
-    hit(player);
-    console.log("Hit!");
-    let sillystring={};
-    sillystring.player=player;
-    sillystring.horse=horse;
-    res.json(sillystring);
+app.post('/reset', (req,res) =>{
+    if(stand===false){
+    function resetion(){
+        res.redirect('http://localhost:6969');
+    };
+    setInterval(resetion(),1000);
     }
     else{
-        res.send("hit reset you idiot");
-    }
-});
-app.post('/reset', (req,res) =>{
-    if(stand=true){
     console.log("Reset");
-    res.json("Reset");
     deck=[];
     stand=false;
     player=[];
     horse=[];
+    win=0;
     createdeck();
     start();
-    }
-    else{
-        res.json("You need to stand first");
+    res.redirect('http://localhost:6969');
     }
     });
+
 app.post('/stand', (req,res) =>{
 winconditions();
-res.json(win);
+res.redirect('http://localhost:6969');
         stand=true;
         });
+
 app.listen(port, () => {
     console.log(`BlackJack Server at http://localhost:${port}`)
 });

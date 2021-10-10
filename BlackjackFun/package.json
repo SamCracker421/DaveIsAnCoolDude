@@ -12,5 +12,8 @@
     "isis"
   ],
   "author": "Sammy",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express-session": "^1.17.2"
+  }
 }
