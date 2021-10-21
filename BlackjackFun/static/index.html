@@ -10,6 +10,11 @@
         <input type="hidden" value="Hit" name="command">
         <input type="submit" value="Hit">
     </form>
+    <form action="bet" method="post">
+        <label for="quantity">Bet:</label>
+        <input type="number" id="quantity" name="bet" min="1" max="100">
+        <input type="submit" value="Submit">
+    </form>
     <form action="reset" method="post">
         <input type="hidden" value="Reset" name="command">
         <input type="submit" value="Reset">

@@ -1,0 +1,22 @@
+{
+  "name": "idk",
+  "version": "1.0.0",
+  "description": "Signing In and Out Database thingy",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "dave"
+  ],
+  "author": "Sammy",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "nanoid": "^3.1.30",
+    "nodemon": "^2.0.13"
+  },
+  "devDependencies": {}
+}

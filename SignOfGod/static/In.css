@@ -1,0 +1,28 @@
+body{
+background-color:blue
+}
+.cheese{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+}
+label{
+    font-size:20px;
+    color: gold;
+
+}
+.forms{
+    display: flex;
+    align-items: center;
+}
+#submit{
+    background-color:gold;
+    color:blue;
+    width:150;
+    height:100;
+}
+h1{
+    color:gold;
+    font-size:30px;
+}

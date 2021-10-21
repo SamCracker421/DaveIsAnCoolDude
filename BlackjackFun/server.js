@@ -1,4 +1,3 @@
-const { SSL_OP_EPHEMERAL_RSA } = require('constants');
 const express = require('express');
 const session = require('express-session');
 const app = express();
@@ -95,25 +94,31 @@ function house(horse,deck,player,win) {
     return horse;
 }
 
-function winconditions(player,horse,deck) {
+function winconditions(bet,player,horse,deck,bank) {
     let win=0;
     if(sum(player)<=21){
         house(horse,deck,player,win);
     }
     if(sum(horse)>21 && sum(player)<=21){
+        
         win=2;
+        bank=bank+bet;
     }
     if(sum(horse)<sum(player) && sum(player)<=21){
         win=2;
+        bank=bank+bet;
     }
     else if(sum(horse)>sum(player) && sum(horse) <= 21){
         win=1;
+        bank=bank-bet;
     }
     else if(sum(player)==sum(horse)){
         win=4;
+        bank=bank;
     }
     else if(sum(player)>21){
         win=1;
+        bank=bank-bet;
     }
     return win;
 }
@@ -122,10 +127,12 @@ function winconditions(player,horse,deck) {
 //predominantly server side code.
 function initialization(){
     var win = 0;
+    var bank=100;
     var stand=false;
     var horse = [];
     var player = [];
     var deck = [];
+    var bet;
     createdeck(deck);
     start(horse,player,deck);
     return{
@@ -144,6 +151,7 @@ app.get('/', (req, res)=>{
 
 app.post('/', (req, res)=>{
     if(req.session.game===undefined){
+        
         req.session.game=initialization();
         console.log("hello");
     }
@@ -171,8 +179,19 @@ app.post('/reset', (req,res) =>{
     }
     });
 
+app.post('/bet', (req,res) =>{
+    if(req.body.bet===undefined){
+        console.log("bet");
+        console.log(req.body.bet);
+        req.session.game.bet=req.body.bet;
+    }
+    else{
+        res.redirect('http://localhost:6969');
+    }
+
+});
 app.post('/stand', (req,res) =>{
-req.session.game.win=winconditions(req.session.game.player,req.session.game.horse,req.session.game.deck);
+req.session.game.win=winconditions(req.session.game.bet,req.session.game.player,req.session.game.horse,req.session.game.deck,req.session.game.bank);
 req.session.game.stand=true;
 res.redirect('http://localhost:6969');
 

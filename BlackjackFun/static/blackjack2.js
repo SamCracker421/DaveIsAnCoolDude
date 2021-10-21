@@ -2,7 +2,7 @@ let variable=[];
 let horse=[];
 let snad;
 let won;
-
+let bot;
 let cheese=document.createElement("div");
 document.body.appendChild(cheese);
 let viola=document.getElementById("cheddar");
