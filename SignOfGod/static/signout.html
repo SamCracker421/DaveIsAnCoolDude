@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Sign Out</title>
+</head>
+<body>
+    <script src="SignOfGod.js"></script>
+    <div id="radioshack">
+
+
+    </div>
+    <script>
+function cuck(){
+let firstname=document.getElementById("firstname").value;
+let lastname=document.getElementById("lastname").value;
+
+addstudent(firstname,lastname);
+
+document.getElementById("firstname").value="";
+document.getElementById("lastname").value="";
+}
+
+getEvent();
+for(var cp in events){
+    let tofurkey=documement.createElement("label");
+    let tochicken=document.createElement("input");
+    tochicken.type="radio";
+    tochicken.id=events[cp].name;
+    tochicken.name="event: "+ events[cp].name;
+    tochicken.value=events[cp].name;
+    tofurkey.for=tochicken.id;
+    tofurkey.innerText=events[cp].name;
+    document.getElementById("radioshack").appendChild(tofurkey);
+    document.getElementById("radioshack").appendChild(tochicken);
+}
+    </script>
+        <label for="firstname">First name:</label><br>
+        <input type="text" id="firstname" name="firstname"><br>
+        <label for="lastname">Last name:</label><br>
+        <input type="text" id="lastname" name="lastname"><br><br>
+        <button onclick="cuck()">submit</button>
+
+
+
+</body>
+</html>
