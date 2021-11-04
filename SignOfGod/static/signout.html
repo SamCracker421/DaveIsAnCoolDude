@@ -3,13 +3,11 @@
 <head>
     <title>Sign Out</title>
 </head>
-<body>
+<body onload="getEvents()">
     <script src="SignOfGod.js"></script>
-    <div id="radioshack">
-
-
-    </div>
+    <div id="radioshack"></div>
     <script>
+
 function cuck(){
 let firstname=document.getElementById("firstname").value;
 let lastname=document.getElementById("lastname").value;
@@ -19,20 +17,22 @@ addstudent(firstname,lastname);
 document.getElementById("firstname").value="";
 document.getElementById("lastname").value="";
 }
+console.log(events)
+for(let pp=0; pp<events.length;pp++){
+    let cormdog=document.createElement('input');
+    cormdog.type='radio';
+    cormdog.id=events[pp].name;
+    cormdog.name=events[pp].name;
+    cormdog.value=events[pp].name;
 
-getEvent();
-for(var cp in events){
-    let tofurkey=documement.createElement("label");
-    let tochicken=document.createElement("input");
-    tochicken.type="radio";
-    tochicken.id=events[cp].name;
-    tochicken.name="event: "+ events[cp].name;
-    tochicken.value=events[cp].name;
-    tofurkey.for=tochicken.id;
-    tofurkey.innerText=events[cp].name;
-    document.getElementById("radioshack").appendChild(tofurkey);
-    document.getElementById("radioshack").appendChild(tochicken);
+    let cheese=documement.createElement('label');
+    cheese.for=cormdog.id;
+    cheese.innerText=events[pp].name;
+    
+    document.getElementById('radioshack').appendChild(cheese);
+    document.getElementById('radioshack').appendChild(cormdog);
 }
+setInterval(getEvents(),1000);
     </script>
         <label for="firstname">First name:</label><br>
         <input type="text" id="firstname" name="firstname"><br>

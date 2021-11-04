@@ -1,4 +1,5 @@
-let events;
+let students;
+let events=[];
 function getStudent(id) {
     fetch(id==undefined ? `/students` : `/students/${id}`, {
     method: 'GET',
@@ -9,6 +10,7 @@ function getStudent(id) {
     .then(res => res.json())
     .then(data => {
         console.log(data);
+        students=data;
     })
     .catch(error => {
         console.log("error")
@@ -18,15 +20,11 @@ function getEvents(){
     fetch(`/events`, {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json',
-        },
-            body: JSON.stringify({
-            cmd: "boop"
-            })
+            'Content-Type': 'application/json',}
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
+            events=data;
         })
         .catch(error => {
             console.log(error);
