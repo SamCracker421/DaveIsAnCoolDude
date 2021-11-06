@@ -1,32 +1,29 @@
 const {
-    info
-} = require('console');
+    sign
+} = require('crypto');
 var express = require('express');
-const {
-    platform
-} = require('os');
+var http = require('http');
+var path = require('path');
+var socketIO = require('socket.io');
+const port = 3000;
+
 var app = express();
-var port = 6969;
+var server = http.Server(app);
+var io = socketIO(server);
 
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
-
-const path = require('path');
-const {
-    send
-} = require('process');
-
-
+app.set('port', port);
 app.use('/static', express.static(__dirname + '/static'));
+
+// Routing
 app.get('/', function (request, response) {
-    response.sendFile(path.join(__dirname, '/static/index.html'));
+    response.sendFile(path.join(__dirname, '/static/game.html'));
 });
 
-io.on('connection', function (socket) {
-    socket.on('disconnect', function () {
-        delete players[socket.id];
-    });
+// Starts the server.
+server.listen(port, function () {
+    console.log(`Starting server on port ${port}`);
 });
+
 var players = {};
 var apples = {};
 
