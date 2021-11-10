@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <title>Sign Out</title>
+    <link rel="stylesheet" href="signout.css">
 </head>
-<body onload="getEvents()">
+<body>
     <script src="SignOfGod.js"></script>
     <div id="radioshack"></div>
     <script>
@@ -13,34 +14,28 @@ let firstname=document.getElementById("firstname").value;
 let lastname=document.getElementById("lastname").value;
 
 addstudent(firstname,lastname);
-
 document.getElementById("firstname").value="";
 document.getElementById("lastname").value="";
-}
-console.log(events)
-for(let pp=0; pp<events.length;pp++){
-    let cormdog=document.createElement('input');
-    cormdog.type='radio';
-    cormdog.id=events[pp].name;
-    cormdog.name=events[pp].name;
-    cormdog.value=events[pp].name;
 
-    let cheese=documement.createElement('label');
-    cheese.for=cormdog.id;
-    cheese.innerText=events[pp].name;
-    
-    document.getElementById('radioshack').appendChild(cheese);
-    document.getElementById('radioshack').appendChild(cormdog);
+const rbs = document.querySelectorAll('input[name="events"]');
+            let selectedValue;
+            for (const rb of rbs) {
+                if (rb.checked) {
+                    selectedValue = rb.value;
+                    rb.checked=false;
+                    break;
+                }
+            }
+
+cheetoes(selectedValue);
 }
-setInterval(getEvents(),1000);
+something();
     </script>
         <label for="firstname">First name:</label><br>
         <input type="text" id="firstname" name="firstname"><br>
         <label for="lastname">Last name:</label><br>
         <input type="text" id="lastname" name="lastname"><br><br>
         <button onclick="cuck()">submit</button>
-
-
 
 </body>
 </html>
