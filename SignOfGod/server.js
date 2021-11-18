@@ -3,6 +3,8 @@ const { nanoid } = require('nanoid');
 const session = require('express-session');
 const app = express();
 const port = 6969;
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('SignIn.db');
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -13,12 +15,15 @@ const path = require('path');
 const { send } = require('process');
 app.use('/', express.static(path.join(__dirname, 'static')));
 
-let students=[];
-let events=[];
-let signups=[];
-
 app.get('/students', (req,res)=>{
-    res.json(students);
+            db.all("select * from students", function(err,row){ 
+                if(err){
+                    console.log(err);
+                }
+                if(row){
+                    res.status(201).json(row);
+                }
+            })
 });
 
 app.post('/students', (req, res) =>{
@@ -27,12 +32,24 @@ app.post('/students', (req, res) =>{
         firstname:req.body.firstname,
         lastname:req.body.lastname
     }
-    students.push(student);
+    db.serialize(function(){
+        let init=db.prepare("insert into students values (?,?,?)");
+        init.run(student.id,student.firstname,student.lastname);
+        init.finalize();
+    })
     res.status(201).json(student)
 });
 app.get('/events',(req,res)=>{
-res.json(events);
+            db.all("Select * from events", function(err,row){
+                if(err){
+                    console.log(err);
+                }
+                if(row){
+                    res.status(201).json(row);
+                }
+            })
 })
+
 app.post('/events', (req,res)=>{
     let event={
         id:nanoid(),
@@ -41,24 +58,15 @@ app.post('/events', (req,res)=>{
         time:req.body.time,
         duration:req.body.duration
     }
-    events.push(event);
-    res.status(201).json(event)
-})
-app.post('/signups',(req,res)=>{    
-    if(students.find(e=>e.id === req.body.userId)=== undefined){
-        console.log("Students");
-    }
-    if(events.find(e=>e.id === req.params.eventId) === undefined){
-        console.log("Events");
-    }
-    console.log(students)
-    console.log(events)
-if(students.find(e=>e.id === req.body.userId) === undefined || events.find(e=>e.id === req.body.eventId) === undefined){
-    res.status(404).json({
-        status:"You are very worthless, go to Mexico and die."
+    db.serialize(function(){
+        let init=db.prepare("insert into events values (?,?,?,?,?)");
+        init.run(event.id,event.name,event.date,event.time,event.duration);
+        init.finalize();
     })
-    return;
-}
+    res.status(201).json(events);
+})
+
+app.post('/signups',(req,res)=>{    
     let signup={
         id:nanoid(),
         userId:req.body.userId,
@@ -66,139 +74,193 @@ if(students.find(e=>e.id === req.body.userId) === undefined || events.find(e=>e.
         signout:req.body.signout,
         signin:req.body.signup
     }
-    signups.push(signup)
+    db.serialize(function(){
+        let init=db.prepare("insert into events values (?,?,?,?,?)");
+        init.run(signup.id,signup.userId,signup.eventId,signup.signout,signup.signin);
+        init.finalize();
+    })
     res.status(201).json(signup);
 });
 app.get('/signups',(req,res)=>{
-    res.json(signups)
+    db.serialize(
+        function() {
+            db.each("Select * from signups", function(err,row){
+                console.log(row);
+            })
+        }
+        )
 })
 app.get('/students/:id', (req,res)=>{
-res.send(students.find(e=>e.id === req.params.id));
+db.get("select * from students where id=?",req.params.id,(err,row)=>{
+    if(err){
+        console.log(err)
+    }
+    else if(row){
+        console.log(row);
+        res.json(row);
+    }
+    
+})
+
 })
 app.post('/students/:id',(req,res)=>{
-let student = students.find(e=>e.id === req.params.id);
-if(!student){
-    res.status(404).json({
-        status:"Stop Searching for things that dont exist"
+    db.get("select * from students where id=?",req.params.id,(err,row)=>{
+        if(err){
+            console.log(err)
+            res.status(404)
+        }
+        else if(row){
+            console.log(row);
+            res.status(201).json(row)
+        }
+        
     })
-}
-else{
-    res.json(student);
-    res.status(201).json(student)
-}
+    
 })
 app.patch('/students/:id',(req,res)=>{
-    let student = students.find(e=>e.id === req.params.id);
-if(!student){
-    res.status(404).json({
-        status:"Stop Searching for things that dont exist"
+    db.get("select * from students where id=?",req.params.id,(err,row)=>{
+        if(err){
+            console.log(err)
+            res.status(404).json({status:"stop"});
+        }
+        else if(row){
+            let firstname = req.body.firstname ? req.body.firstname : row.firstname;
+            let lastname = req.body.lastname ? req.body.lastname : row.lastname;
+        db.run("update students set firstname="+firstname+",lastname="+lastname+"where id="+req.params.id);
+            res.status(201).json(row)
+        } 
     })
-}
-else{
-    let inchex=students.indexOf(student);
-    let firstname = req.body.firstname ? req.body.firstname : student.firstname;
-    let lastname = req.body.lastname ? req.body.lastname : student.lastname;
-    students[inchex]={
-        "firstname":firstname,
-        "lastname":lastname,
-    }
-    res.status(201).json(students[inchex]);
-}
 })
 
 app.get('/events/:id', (req,res)=>{
-    res.send(events.find(e=>e.id === req.params.id));
-    })
+db.get("select * from events where id=?",req.params.id,(err,row)=>{
+    if(err){
+        console.log(err)
+        res.status(404)
+    }
+    else if(row){
+        res.status(201).json(row)
+    }
+    
+})
+
+})
 
 app.post('/events/:id',(req,res)=>{
-    let event = events.find(e=>e.id === req.params.id);
-    if(!event){
-        res.status(404).json({
-            status:"Stop Searching for things that dont exist"
-        })
-    }
-    else{
-        res.status(201).json(event)
-    }
-    })
-    app.patch('/events/:id',(req,res)=>{
-        let event = events.find(e=>e.id === req.params.id);
-    if(!event){
-        res.status(404).json({
-            status:"Stop Searching for things that dont exist"
-        })
-    }
-    else{
-        let inchex=events.indexOf(event);
-        let name = req.body.name ? req.body.name : event.name;
-        let date = req.body.date? req.body.date : event.date;
-        let time = req.body.time? req.body.time : event.time;
-        let duration= req.body.duration? req.body.duration:event.duration;
-        events[inchex]={
-            name:req.body.name,
-            date:req.body.date,
-            time:req.body.time,
-            duration:req.body.duration
+    db.get("select * from events where id=?",req.params.id,(err,row)=>{
+        if(err){
+            console.log(err)
+            res.status(404)
         }
-        res.status(201).json(events[inchex]);
-    }
+        else if(row){
+            console.log(row);
+            res.status(201).json(row)
+        }
+        
     })
+})
+    app.patch('/events/:id',(req,res)=>{
+        db.get("select * from students where id=?",req.params.id,(err,row)=>{
+        if(err){
+            console.log(err)
+            res.status(404).json({status:"stop"});
+        }
+        else if(row){
+            let name = req.body.name ? req.body.name : row.name;
+            let date = req.body.date? req.body.date : row.date;
+            let time = req.body.time? req.body.time : row.time;
+            let duration= req.body.duration? req.body.duration:row.duration;
+        db.run("update events set name="+name+",date="+date+", time="+time+"duration="+duration+ "where id="+req.params.id);
+            res.status(201).json(row)
+        } 
+    })
+    })
+
     app.get('/signups/:id', (req,res)=>{
-        res.send(signups.find(e=>e.id === req.params.id));
+    db.get("select * from events where id=?",req.params.id,(err,row)=>{
+        if(err){
+            console.log(err)
+            res.status(404)
+        }
+        else if(row){
+            console.log(row);
+            res.status(201).json(row)
+        }
+        
+    })
         })
     app.post('/signups/:id',(req,res)=>{
-        let signup = signups.find(e=>e.id === req.params.id);
-        if(!signup){
-            res.status(404).json({
-                status:"Stop Searching for things that dont exist"
-            })
-        }
-        else{
-            res.status(201).json(signup)
-        }
+        db.get("select * from students where id=?",req.params.id,(err,row)=>{
+            if(err){
+                console.log(err)
+                res.status(404)
+            }
+            else if(row){
+                console.log(row);
+                res.status(201).json(row)
+            }
+            
+        })
         })
         app.patch('/signups/:id',(req,res)=>{
-            let signup = signups.find(e=>e.id === req.params.id);
-        if(!signup){
-            res.status(404).json({
-                status:"Stop Searching for things that dont exist"
+            db.get("select * from signups where id=?",req.params.id,(err,row)=>{
+                if(err){
+                    console.log(err)
+                    res.status(404).json({status:"stop"});
+                }
+                else if(row){
+                    let userId = req.body.userId ? req.body.userId : row.userId;
+                    let eventId = req.body.eventId? req.body.eventId : row.eventId;
+                    let signout = req.body.signout? req.body.signout : row.signout;
+                    let signin= req.body.signin? req.body.signin:row.signin;
+                db.run("update signups set userId="+userId+",eventId="+eventId+", signout="+signout+"signin="+signin+ "where id="+req.params.id);
+                    res.status(201).json(row)
+                } 
             })
-        }        
-
-        else{
-            let inchex=signups.indexOf(signup);
-            let userId = req.body.userId ? req.body.userId : signup.userId;
-            let eventId = req.body.eventId? req.body.eventId : signup.eventId;
-            let signout = req.body.signout? req.body.signout : signup.signout;
-            let signin= req.body.signin? req.body.signin:signup.signin;
-            signup[inchex]={
-                userId:req.body.userId,
-                eventId:req.body.eventId,
-                signout:req.body.signout,
-                signin:req.body.signup
-            }
-            res.status(201).json(signup[inchex]);
-        }
         })
         app.get('/students/:id/events', (req,res) => {
-            let cheeto=[];
-            for(let signup of signups){
-                if(signup.userId == req.params.id){
-                    cheeto.push(events.find(e=>e.id === signup.eventId));
+            db.all("select * from signups where userId=?",req.params.id,(err,row)=>{
+                if(err){
+                    console.log(err);
                 }
-            }
-            res.status(200).json(JSON.stringify(cheeto));
+                if(row){
+                    for(let i=0; i < row.length;i++){
+                    db.all("select * from events where id=?",row[i].eventId,(error,rew)=>{
+                        if(err){
+                            console.log(error);
+                        }
+                        if(rew){
+                        res.status(201).json(rew);
+                        }
+                    })
+                }
+                }
+            })
         })
-
         app.get('/events/:id/students', (req,res) => {
-            let cheetoes=[];
-            for(let signup of signups){
-                if(signup.eventId == req.params.id){
-                    cheetoes.push(students.find(e=>e.id === signup.userId));
+            db.all("select * from signups where eventId=?",req.params.id,(err,row)=>{
+                if(err){
+                    console.log(err);
                 }
+                if(row){
+                    let string="";
+                    for(let x=1;x<row.length;x++){
+                        string+=" or id="+row[x].userId;
+                    }
+                    console.log(string);
+                        db.all("select * from students where id=?"+string,row[0].userId,(error,rew)=>{
+                            
+                        if(error){
+                            console.log(error);
+                        }
+                        if(rew){
+                            res.status(201).json(rew);
+                        }
+                    })
+                }
+                })
             }
-            res.status(200).json(JSON.stringify(cheetoes));
-        })
+        )
 
         app.delete('/students/:id', (req,res) => {
             let student= students.find(e=>e.id === req.params.id)
@@ -213,3 +275,4 @@ app.post('/events/:id',(req,res)=>{
 app.listen(port, () => {
     console.log(`BlackJack Server at http://localhost:${port}`)
 });
+

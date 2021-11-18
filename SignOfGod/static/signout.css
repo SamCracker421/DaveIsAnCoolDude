@@ -1,8 +1,26 @@
 body{
-    background-color: blue;
+    background-color: dodgerblue;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    flex-wrap:wrap;
+    align-items: center;
+}
+h1{
+    background-color: gold;
+    color:dodgerblue;
 }
 #radioshack{
 align-items: center;
-
-background-color: gold;
+}
+label{
+    background-color: dodgerblue;
+    color:gold;
+}
+input{
+    background-color:gold;
+}
+#frick{
+    background-color: dodgerblue;
+    color:gold;
 }
