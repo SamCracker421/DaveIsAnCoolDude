@@ -16,7 +16,7 @@ app.use('/static', express.static(__dirname + '/static'));
 
 // Routing
 app.get('/', function (request, response) {
-    response.sendFile(path.join(__dirname, '/static/game.html'));
+    response.sendFile(path.join(__dirname, '/static/index.html'));
 });
 
 // Starts the server.
@@ -104,10 +104,6 @@ io.on('connection', function (socket) {
 
 });
 
-server.listen(port, () => {
-    console.log(`Snake Server at http://localhost:${port}`)
-});
-
 setInterval(function () {
     io.sockets.emit('state', players,apples);
-}, 1000 / 30);
+}, 1000 / 60);

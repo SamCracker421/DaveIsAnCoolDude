@@ -53,7 +53,7 @@ document.addEventListener('keyup', function (event) {
 socket.emit('new player');
 setInterval(function () {
   socket.emit('movement', movement);
-}, 1000 / 10);
+}, 1000 / 60);
 
 socket.on('fuckyou', function() {
 location.reload();

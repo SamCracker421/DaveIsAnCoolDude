@@ -1,6 +1,6 @@
--- create table students (id text primary key, firstname text not null, lastname text not null);
+create table students (id text primary key, firstname text not null, lastname text not null);
 -- create table events (id text primary key, name text not null, date text not null, time text not null, duration text not null);
--- create table signups(id text primary key, userId text not null, eventId text not null, signout text not null, signin text not null);
+create table signups(id text primary key, userId text not null, eventId text not null, signout text not null, signin text);
 -- insert into students(id, firstname, lastname) values 
 -- ("1", "Cameron", "Fryer"),
 -- ("2","Dave","Kim"),
@@ -17,4 +17,4 @@
 -- ("3","3", "3", "7:43", "5:04"),
 -- ("4","4","1", "3:00","6:00"),
 -- ("5","5","2","5:00","6:00");
-update students set firstname="popo", lastname="opop" where id=3
+-- update students set firstname="popo", lastname="opop" where id=3
