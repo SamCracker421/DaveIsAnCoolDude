@@ -1,7 +1,6 @@
 var socket=io();
 once=true;
-  
-  document.addEventListener('keydown', function (event) {
+document.addEventListener('keydown', function (event) {
       socket.emit('movement',event.which);
   });
   socket.emit('new player');

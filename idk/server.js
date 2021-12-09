@@ -89,7 +89,7 @@ io.on('connection', function (socket) {
         for (var id in players) {
             for (var stupid in players[id].recentpos) {
                 if ((Math.sqrt(Math.pow(player.x - players[id].recentpos[stupid].x, 2)) < 2 && Math.sqrt(Math.pow(player.y - players[id].recentpos[stupid].y, 2)) < 2.5) && players[id].recentpos != player.recentpos) {
-                    socket.emit('fuckyou');
+                    socket.emit('');
                 }
             }
         }

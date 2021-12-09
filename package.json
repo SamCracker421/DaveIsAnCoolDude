@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "convnet": "^1.0.0",
     "nodemon": "^2.0.14",
     "sqlite3": "^5.0.2"
   }
